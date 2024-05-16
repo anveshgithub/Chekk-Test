@@ -4,22 +4,21 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', url: 'https://github.com/your-username/your-repo.git'
+                git branch: 'master', url: 'https://github.com/anveshgithub/Chekk-Test.git'
             }
         }
-        stage('Build with Maven') { // Adjust for your build tool if not Maven
+        stage('Build with Maven') { 
             steps {
                 sh 'mvn clean package'
             }
         }
-        stage('Deploy to Server (Optional)') {
-            when { // This stage is optional
-                expression { return environment == 'production' } // Only deploy to server in production environment
+        stage('Deploy to Server') {
+            when { 
+                expression { return environment == 'production' } 
             }
             steps {
                 script {
                     def warFile = "${env.WORKSPACE}/target/*.war"
-                    // You can choose different deployment methods based on your server setup
                     // Here's an example using SSH transfer:
                     sh """
                         scp -o StrictHostKeyChecking=no ${warFile} user@server_ip:/path/to/tomcat/webapps/your-app.war
