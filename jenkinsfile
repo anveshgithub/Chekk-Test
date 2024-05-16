@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'master', url: 'https://github.com/your-username/your-repo.git'
+            }
+        }
+        stage('Build with Maven') { // Adjust for your build tool if not Maven
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to Server (Optional)') {
+            when { // This stage is optional
+                expression { return environment == 'production' } // Only deploy to server in production environment
+            }
+            steps {
+                script {
+                    def warFile = "${env.WORKSPACE}/target/*.war"
+                    // You can choose different deployment methods based on your server setup
+                    // Here's an example using SSH transfer:
+                    sh """
+                        scp -o StrictHostKeyChecking=no ${warFile} user@server_ip:/path/to/tomcat/webapps/your-app.war
+                    """
+                    // Replace with your server details (username, IP, path) and adjust the scp command accordingly.
+                }
+            }
+        }
+    }
+}
