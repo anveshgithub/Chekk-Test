@@ -43,8 +43,9 @@ pipeline {
                     sh "git add deployment.yaml"
                     sh "git commit -m 'updating manifests with image id'"
                     sh "git push origin master"
-                }
-            }
-        }
-    }
+                  }
+              }
+          }
+      }
+   }
 }
