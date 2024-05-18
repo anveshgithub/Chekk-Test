@@ -30,6 +30,15 @@ pipeline {
                 }
             }
           }
+          stage('update image tag in manifest file for CD'){
+              steps{
+                  script{
+                      git branch: 'master', url: 'https://github.com/anveshgithub/K8-S.git'
+                      sh 'sed -i "s/ushkamalla/test:[^:]*/ushkamalla/test:'"${BUILD_NUMBER}"'/ deployment.yaml'
+                      git add  'deployment.yaml'
+                      git commit -m "Build #${BUILD_NUMBER}: Update image and manifest"
+                      git push origin master
+
         }
     }     
         
