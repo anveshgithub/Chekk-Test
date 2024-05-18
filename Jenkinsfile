@@ -43,7 +43,7 @@ pipeline {
                     
                     // Add and commit changes (requires security considerations)
                     git add 'deployment.yaml'
-                    git commit message:"Build #${BUILD_NUMBER}:Update image and manifest"
+                    git commit -m "updating manifests with image id"
                     git push origin master
                 }
             }
