@@ -39,7 +39,7 @@ pipeline {
                     git branch: 'master', url: 'https://github.com/anveshgithub/K8-S.git'
                     
                     // Update deployment.yaml with image tag using 'sh' or a dedicated library (consider security)
-                    sh sed -i sh 'sed -i "s/ushkamalla\/test:[^:]*/ushkamalla\/test:${BUILD_NUMBER}" deployment.yaml' // Use with caution
+                    sh 'sed -i "s/ushkamalla\/test:[^:]*/ushkamalla\/test:${BUILD_NUMBER}" deployment.yaml' // Use with caution
                     
                     // Add and commit changes (requires security considerations)
                     git add 'deployment.yaml'
