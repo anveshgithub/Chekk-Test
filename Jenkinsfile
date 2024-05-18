@@ -37,7 +37,7 @@ pipeline {
                 script {
                         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
                         sh "sed -i 's#ushkamalla/test:[^:]*#ushkamalla/test:${BUILD_NUMBER}#' manifest/deployment.yaml"
-                        sh "git add deployment.yaml"
+                        sh "git add manifest/deployment.yaml"
                         sh "git config --global user.email 'anveshushkamalla123@gmail.com'"
                         sh "git config --global user.name 'anvesh ushkamalla'"    
                         sh "git commit -m 'updating manifests with image id'"
