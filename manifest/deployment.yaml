@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: ushkamalla/test:102
+        image: ushkamalla/test:103
         ports:
         - containerPort: 8080
       imagePullSecrets:
