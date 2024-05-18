@@ -14,7 +14,7 @@ pipeline {
             }
         }
         
-        stage('Build Docker Image') { // Capitalized "Image" for consistency
+        stage('Build Docker Image') {
             steps {
                 script {
                     sh 'docker build -t ushkamalla/test:${BUILD_NUMBER} .'
@@ -30,22 +30,19 @@ pipeline {
                     }
                 }
             }
+        }
         
-        
-        stage('Update Image Tag in Manifest (CD)') { // Improved clarity
+        stage('Update Image Tag in Manifest (CD)') {
             steps {
                 script {
-                    
-                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
-                    
-                    sh "sed -i 's#ushkamalla/test:[^:]*#ushkamalla/test:${BUILD_NUMBER}#' deployment.yaml"
-                    
-                    sh "git add deployment.yaml"
-                    sh "git commit -m 'updating manifests with image id'"
-                    sh "git push origin master"
-                  }
-              }
-          }
-      }
-   }
+                        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                        sh "sed -i 's#ushkamalla/test:[^:]*#ushkamalla/test:${BUILD_NUMBER}#' deployment.yaml"
+                        sh "git add deployment.yaml"
+                        sh "git commit -m 'updating manifests with image id'"
+                        sh "git push origin master"
+                    }
+                }
+            }
+        }
+    }
 }
