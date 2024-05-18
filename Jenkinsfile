@@ -7,25 +7,30 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/anveshgithub/Chekk-Test.git'
             }
         }
+    
         stage('Build with Maven') { 
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -f MySpring_Boot_aa23v_VotingApp_Final/pom.xml'
             }
         }
-        stage('Deploy to Server') {
-            when { 
-                expression { return environment == 'production' } 
-            }
-            steps {
-                script {
-                    def warFile = "${env.WORKSPACE}/target/*.war"
-                    // Here's an example using SSH transfer:
-                    sh """
-                        scp -o StrictHostKeyChecking=no ${warFile} user@server_ip:/path/to/tomcat/webapps/your-app.war
-                    """
-                    // Replace with your server details (username, IP, path) and adjust the scp command accordingly.
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t ushkamalla/test  .'
                 }
             }
         }
-    }
-}
+        stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([usernamePassword(credentialsId: 'test-pwd', passwordVariable: 'passwird', usernameVariable: 'ushkamalla')]) {
+                   
+
+                   sh 'docker push ushkamalla/test'
+                }
+            }
+          }
+        }
+    }     
+        
+}      
