@@ -10,13 +10,13 @@ pipeline {
     
         stage('Build with Maven') { 
             steps {
-                sh 'mvn clean package -f MySpring_Boot_aa23v_VotingApp_Final/pom.xml'
+                sh 'mvn clean package -f MySpring_Boot_aa23v_VotingApp_Final/pom.xml -DbuildNumber=${BUILD_NUMBER}'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t ushkamalla/test  .'
+                    sh 'docker build -t ushkamalla/test:${BUILD_NUMBER}  .'
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                    withCredentials([usernamePassword(credentialsId: 'test-pwd', passwordVariable: 'passwird', usernameVariable: 'ushkamalla')]) {
                    
 
-                   sh 'docker push ushkamalla/test'
+                   sh 'docker push ushkamalla/test:${BUILD_NUMBER}'
                 }
             }
           }
