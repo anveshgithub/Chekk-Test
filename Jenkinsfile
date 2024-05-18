@@ -35,12 +35,7 @@ pipeline {
         stage('Update Image Tag in Manifest (CD)') { // Improved clarity
             steps {
                 script {
-                    // Checkout the deployment repository (assuming separate repo)
-                    git branch: 'master', url: 'https://github.com/anveshgithub/K8-S.git'
-                    
-                    // Update deployment.yaml with image tag using 'sh' or a dedicated library (consider security)
                     sh sed -i 's#ushkamalla/test:[^:]*#ushkamalla/test:${BUILD_NUMBER}#' deployment.yaml
-                    
                     git add 'deployment.yaml'
                     git commit -m "updating manifests with image id"
                     git push origin master
