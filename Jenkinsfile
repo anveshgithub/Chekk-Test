@@ -39,7 +39,8 @@ pipeline {
                       git commit -m "Build #${BUILD_NUMBER}: Update image and manifest"
                       git push origin master
                   }
-                }
+              }
+          }
     }     
         
 }      
