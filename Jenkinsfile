@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
         
         stage('Update Image Tag in Manifest (CD)') { // Improved clarity
             steps {
