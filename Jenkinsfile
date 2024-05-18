@@ -35,6 +35,7 @@ pipeline {
         stage('Update Image Tag in Manifest (CD)') { // Improved clarity
             steps {
                 script {
+                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')])
                     sh sed -i 's#ushkamalla/test:[^:]*#ushkamalla/test:${BUILD_NUMBER}#' deployment.yaml
                     git add 'deployment.yaml'
                     git commit -m "updating manifests with image id"
