@@ -24,9 +24,7 @@ pipeline {
             steps{
                 script{
                    withCredentials([usernamePassword(credentialsId: 'test-pwd', passwordVariable: 'passwird', usernameVariable: 'ushkamalla')]) {
-                   
-
-                   sh 'docker push ushkamalla/test:${BUILD_NUMBER}'
+                    sh 'docker push ushkamalla/test:${BUILD_NUMBER}'
                 }
             }
           }
